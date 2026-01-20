@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Antigravity Tools
+Comment=Antigravity Tools Manager
+Exec=/bin/bash -c "/usr/bin/agmt"
+OnlyShowIn=XFCE;
+RunHook=0
+StartupNotify=false
+Terminal=false
+Hidden=false
