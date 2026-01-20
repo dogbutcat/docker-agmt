@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# 设置环境变量
+# export XKL_XMODMAP_DISABLE=1
+# export XDG_CURRENT_DESKTOP=XFCE
+# export XDG_SESSION_DESKTOP=XFCE
+# export XDG_SESSION_TYPE=x11
+
+export XDG_CURRENT_DESKTOP=XFCE
+exec startxfce4

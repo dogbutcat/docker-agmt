@@ -1,0 +1,7 @@
+#!/bin/sh
+set -x
+
+# Define executable path (standard installation path from deb)
+APP_BIN="/usr/bin/antigravity_tools"
+
+$APP_BIN
