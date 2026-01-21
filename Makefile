@@ -3,6 +3,9 @@ TARGETARCH ?= amd64
 IMAGE_NAME := docker-agmt
 CONTAINER_NAME := test_agmt
 
+HTTP_PORT ?= 6000
+HTTPS_PORT ?= 6001
+
 build: stop
 # 	docker buildx build --platform linux/amd64 --build-arg VERSION=$(VERSION) --build-arg TARGETARCH=$(TARGETARCH) -t $(IMAGE_NAME) .
 	docker build --rm \
@@ -21,12 +24,15 @@ test: build
 		-e PUID=1000 \
 		-e PGID=1000 \
 		-e TZ=Asia/Shanghai \
-		-p 3000:3000 \
+		-e CUSTOM_PORT=$(HTTP_PORT) \
+		-e CUSTOM_HTTPS_PORT=$(HTTPS_PORT) \
+		-p $(HTTP_PORT):$(HTTP_PORT) \
+		-p $(HTTPS_PORT):$(HTTPS_PORT) \
 		$(IMAGE_NAME)
 
 run: test
 	@echo "Container $(CONTAINER_NAME) started."
-	@echo "Access KasmVNC at http://localhost:3000"
+	@echo "Access KasmVNC at http://localhost:$(HTTP_PORT)"
 
 logs:
 	docker logs -f $(CONTAINER_NAME)

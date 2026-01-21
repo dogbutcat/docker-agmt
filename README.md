@@ -41,6 +41,9 @@ services:
       - PGID=0
       - USER=root
       # - ZT=true
+      # Change internal port if 3000 is taken on host mode
+      - CUSTOM_PORT=3000
+      - CUSTOM_HTTPS_PORT=3001
     ports:
       - "3000:3000"
     network_mode: host
