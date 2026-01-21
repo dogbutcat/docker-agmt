@@ -1,0 +1,20 @@
+#!/bin/sh
+set -x
+
+# Define executable path (standard installation path from deb)
+APP_BIN="/usr/bin/antigravity"
+
+# Disable AT-SPI warnings
+export NO_AT_BRIDGE=1
+
+
+# export HOME=/mihomo-data/
+export XDG_CONFIG_HOME=/agv-data/
+export SAFE_PATHS=/agv-data/
+
+if [ ! -d $XDG_CONFIG_HOME ]; then
+    mkdir -p $XDG_CONFIG_HOME/agv
+fi
+
+sudo -E env XDG_CONFIG_HOME=$XDG_CONFIG_HOME $APP_BIN --no-sandbox --user-data-dir=$XDG_CONFIG_HOME/agv
+

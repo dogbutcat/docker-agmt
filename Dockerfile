@@ -57,18 +57,22 @@ ARG TARGETARCH
 # Note: Release uses amd64/arm64 naming
 RUN wget -q -O /tmp/antigravity-tools.deb "https://github.com/lbjlaq/Antigravity-Manager/releases/download/v${VERSION}/Antigravity.Tools_${VERSION}_${TARGETARCH}.deb"
 
-COPY root /
-COPY .Xauthority /config/.Xauthority
-
-RUN chmod 644 /etc/xdg/autostart/agmt.desktop
-RUN chmod +x /usr/bin/agmt
-
 # Install Antigravity Tools
 RUN apt install -y /tmp/antigravity-tools.deb
 
-# Create Data Directory
-VOLUME "/root/.antigravity_tools"
-VOLUME "/var/lib/zerotier-one"
+# Install Antigravity CLI
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | tee /etc/apt/sources.list.d/antigravity.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y antigravity
+
+
+COPY root /
+COPY .Xauthority /config/.Xauthority
+
+# RUN chmod 644 /etc/xdg/autostart/agmt.desktop
+# RUN chmod +x /usr/bin/agmt
 
 RUN apt-get purge -y upower \
     xfce4-power-manager-data \
@@ -79,3 +83,7 @@ EXPOSE 3000
 
 ENV HOME=/config
 ENV ZT=false
+
+# Create Data Directory
+VOLUME "/root/.antigravity_tools"
+VOLUME "/var/lib/zerotier-one"

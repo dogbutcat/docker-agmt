@@ -4,4 +4,7 @@ set -x
 # Define executable path (standard installation path from deb)
 APP_BIN="/usr/bin/antigravity_tools"
 
+# Disable AT-SPI warnings
+export NO_AT_BRIDGE=1
+
 $APP_BIN
