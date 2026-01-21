@@ -51,6 +51,7 @@ services:
       - home:/config
       - "agmt-data:/config/.antigravity_tools"
       - "zerotier:/var/lib/zerotier-one"
+      - "mozilla:/config/.config/mozilla"
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -62,4 +63,5 @@ volumes:
   - home
   - agmt-data
   - zerotier
+  - mozilla
 ```
