@@ -7,13 +7,33 @@ APP_BIN="/usr/bin/antigravity"
 # Disable AT-SPI warnings
 export NO_AT_BRIDGE=1
 
-
 # export HOME=/mihomo-data/
 export XDG_CONFIG_HOME=/agv-data
 
-if [ ! -d $XDG_CONFIG_HOME ]; then
-    mkdir -p $XDG_CONFIG_HOME/agv
+# Default user data directory
+USER_DATA_DIR="$XDG_CONFIG_HOME/agv"
+
+# Parse command-line arguments
+for arg in "$@"; do
+    case "$arg" in
+        --user-data-dir=*)
+            USER_DATA_DIR="${arg#--user-data-dir=}"
+            ;;
+        -d=*)
+            USER_DATA_DIR="${arg#-d=}"
+            ;;
+    esac
+done
+
+# Ensure XDG_CONFIG_HOME exists
+if [ ! -d "$XDG_CONFIG_HOME" ]; then
+    mkdir -p "$XDG_CONFIG_HOME"
 fi
 
-sudo -E env XDG_CONFIG_HOME=$XDG_CONFIG_HOME $APP_BIN --no-sandbox --user-data-dir=$XDG_CONFIG_HOME/agv
+# Ensure USER_DATA_DIR exists
+if [ ! -d "$USER_DATA_DIR" ]; then
+    mkdir -p "$USER_DATA_DIR"
+fi
+
+sudo -E env XDG_CONFIG_HOME=$XDG_CONFIG_HOME $APP_BIN --no-sandbox --user-data-dir="$USER_DATA_DIR"
 
