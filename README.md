@@ -50,6 +50,8 @@ services:
     volumes:
       - home:/config
       - "agmt-data:/config/.antigravity_tools"
+      - "agv-data:/agv-data/"
+      - "gemini-data:/config/.gemini"
       - "zerotier:/var/lib/zerotier-one"
       - "mozilla:/config/.config/mozilla"
     cap_add:
@@ -62,6 +64,8 @@ services:
 volumes:
   - home
   - agmt-data
+  - agv-data
+  - gemini-data
   - zerotier
   - mozilla
 ```

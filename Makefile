@@ -3,8 +3,7 @@ TARGETARCH ?= amd64
 IMAGE_NAME := docker-agmt
 CONTAINER_NAME := test_agmt
 
-HTTP_PORT ?= 6000
-HTTPS_PORT ?= 6001
+HTTP_PORT ?= 3000
 
 build: stop
 # 	docker buildx build --platform linux/amd64 --build-arg VERSION=$(VERSION) --build-arg TARGETARCH=$(TARGETARCH) -t $(IMAGE_NAME) .
@@ -25,9 +24,7 @@ test: build
 		-e PGID=1000 \
 		-e TZ=Asia/Shanghai \
 		-e CUSTOM_PORT=$(HTTP_PORT) \
-		-e CUSTOM_HTTPS_PORT=$(HTTPS_PORT) \
 		-p $(HTTP_PORT):$(HTTP_PORT) \
-		-p $(HTTPS_PORT):$(HTTPS_PORT) \
 		$(IMAGE_NAME)
 
 run: test
